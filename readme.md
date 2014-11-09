@@ -26,7 +26,14 @@ Should work on Windows, Linux, and Mac OS X.
 
 ## Executing the test for one of the APIs
 
-1. Edit the *test-name.txt* file to contain a single test name (corresponding to a `testMetadata` property in *test-metadata.js*).
+### One-time initial setup
+1. Open a console window in the *test* subdirectory
+1. Ensure that you have mocha installed globally (`sudo npm install -g mocha` on Linux; `npm install -g mocha` on Windows or Mac OS X)
+1. Install the local dependencies listed in *package.json* by executing `npm install`
+
+### Every time
+1. Edit the *test-name.txt* file to contain a single test/API name (e.g., `node-plain`)
+   (this corresponds to an *examples* subdirectory and also a `testMetadata` object property in *test-metadata.js*).
 1. Open a console window in the *test* subdirectory.
 1. Execute the following command line: `mocha spec.js -b -s 200 -t 5000`
 
@@ -34,7 +41,7 @@ Should work on Windows, Linux, and Mac OS X.
 
 1. Come up with a hyphenated name that represents the framework and/or language for which you are creating a new REST API.
    (Use the existing directory names as a guideline.)
-1. Create a new root-level subdirectory with that same name.
+1. Create a new subdirectory under *examples* with that same name.
 1. Put all your API code in that directory.
 1. Make sure that your API meets the **API Requirements** below.
 1. Add a new property (with the same hyphenated name as your new directory) to the `testMetadata` object in *test-metadata.js*,
