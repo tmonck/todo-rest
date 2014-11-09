@@ -6,3 +6,4 @@ packages
 logs
 *.user
 *.suo
+*.log
