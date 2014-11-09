@@ -19,7 +19,7 @@ var testMetadata = {
     serverProcess: {
       command: 'node',
       args: ['node-plain-server.js'],
-      options: { cwd: '../node-plain' }
+      options: { cwd: '../examples/node-plain' }
     },
     host: 'localhost',
     port: 8880
@@ -28,7 +28,7 @@ var testMetadata = {
     serverProcess: {
       command: 'node',
       args: ['node-express-server.js'],
-      options: { cwd: '../node-express' }
+      options: { cwd: '../examples/node-express' }
     },
     host: 'localhost',
     port: 8881
@@ -37,7 +37,7 @@ var testMetadata = {
     serverProcess: {
       command: 'node',
       args: ['node-sails-server.js'],
-      options: { cwd: '../node-sails' }
+      options: { cwd: '../examples/node-sails' }
     },
     host: 'localhost',
     port: 8882

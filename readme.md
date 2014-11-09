@@ -76,12 +76,12 @@ Todo instances should only consist the following two properties.
 
 ### Operations
 
- - **GET /todos** should return a *200 OK* response containing an array of todo instances (e.g, `[]` when empty, or `[{"id":1,"title":"find Waldo"}]` with one item)
+ - **GET /todos** should return a *200 OK* response containing an array of todo instances (e.g, `[]` when empty, or `[{"id":1,"title":"go round mums"}]` with one item)
 
- - **GET /todos/{id}** should return a *200 OK* response containing the todo with the corresponding `id` (e.g., `GET /todos/1` would return `{"id":1,"title":"find Waldo"}`
+ - **GET /todos/{id}** should return a *200 OK* response containing the todo with the corresponding `id` (e.g., `GET /todos/1` would return `{"id":1,"title":"go round mums"}`
 
- - **POST /todos** should accept a body containing JSON for one new todo, without an `id` set (e.g., `{"title":"find Waldo"}`), set the todo's `id` property with
-   the next sequential id, and return an *201 Created* response with the todo instance, including the new id (e.g., `{"id":1,"title":"find Waldo"}`)
+ - **POST /todos** should accept a body containing JSON for one new todo, without an `id` set (e.g., `{"title":"go round mums"}`), set the todo's `id` property with
+   the next sequential id, and return an *201 Created* response with the todo instance, including the new id (e.g., `{"id":1,"title":"go round mums"}`)
 
  - **PUT /todos/{id}** should accept a body containing JSON for one updated todo (the `id` in the JSON should match the `id` in the URL), replace the corresponding todo
    in the todos array on the server, and return an empty *204 No Content* response

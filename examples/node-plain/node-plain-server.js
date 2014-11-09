@@ -28,7 +28,6 @@ var qs = require('querystring');
         value: findIndex, configurable: true, writable: true
       });
     } catch(e) {
-      log('ERROR: ' + e);
     }
   }
 
@@ -39,37 +38,14 @@ var qs = require('querystring');
 }(this));
 
 var port = process.argv[2] || 8880;
-var fs = require('fs');
 var nextTodoId = 1;
-
-// logging setup
-if (!fs.existsSync('./logs')) fs.mkdirSync('./logs');
-var logFileName = './logs/log ' + new Date().getTime() + '.txt';
-
-var logProperties = function(obj, properties) {
-  properties.split(',').forEach(function (name, index) {
-    name = name.trim();
-    if (name.substr(name.length - 1, 1) === '*') {
-      name = name.substr(0, name.length - 1);
-      log(name + ': ' + JSON.stringify(obj[name], null, 2));
-    } else {
-      log(name + ': ' + obj[name]);
-    }
-  });
-};
-
-var log = function (message) {
-  fs.appendFile(logFileName, '[' + new Date().getTime() + '] ' + message + '\n');
-};
 
 var parseRequest = function(request, callback) {
 
   try {
-    log('url: ' + request.url);
     var method = request.method.toUpperCase();
     var uri = url.parse(request.url);
     var segments = uri.pathname.split('/');
-    log('segments: ' + segments);
     var resource = segments.length < 2 ? null : segments[1].toLowerCase();
     var id = segments.length < 3 ? null : parseInt(segments[2]);
 
@@ -109,16 +85,12 @@ var parseRequest = function(request, callback) {
 var returnOkay = function (response, data) {
   try {
     response.writeHead(200, {'Content-Type': 'text/plain'});
-    log('data: ' + data);
     if (data !== undefined) {
       if (data instanceof String) {
-        log('data is a String');
         response.write(JSON.stringify(data));
       } else if (data instanceof Number) {
-        log('data is a Number');
         response.write(JSON.stringify(data));
       } else {
-        log('data is something else');
         response.write(JSON.stringify(data));
       }
     }
@@ -139,18 +111,12 @@ http.createServer(function (request, response) {
 
   if (request.url === '/favicon.ico') return;
 
-  log('\nNow: ' + new Date());
-  log(request.method + ' ' + request.url);
-
   try {
     parseRequest(request, function (err, requestInfo) {
 
       if (err) throw err;
 
-      log(JSON.stringify(requestInfo));
-
       var pattern = requestInfo.method + ' ' + requestInfo.resource + (requestInfo.id === null ? '' : '/id');
-      log(pattern);
 
       switch (pattern) {
         case 'GET todos': TodoEngine.getAllTodos(requestInfo, response); break;
@@ -164,17 +130,12 @@ http.createServer(function (request, response) {
     });
   }
   catch (err) {
-    // TODO: Log the error.
-    log(err);
-    log(JSON.stringify(err));
     response.writeHead(500, {'Content-Type': 'text/plain'});
     response.write(err + '\n');
     response.end();
   }
 
 }).listen(parseInt(port, 10));
-
-log('Static file server running at\n  => http://localhost:' + port + '/\nCTRL + C to shutdown');
 
 var todos = [];
 TodoEngine = {
@@ -199,20 +160,14 @@ TodoEngine = {
     todo.id = nextTodoId;
     todos.push(todo);
     nextTodoId++;
-    returnOkay(response, { newId: todo.id });
+    returnOkay(response, todo);
   },
 
   overwriteTodo: function (requestInfo, response) {
-    log('requestInfo: ' + JSON.stringify(requestInfo));
     var index = todos.findIndex(function (item) { return item.id === requestInfo.id });
-    log('index: ' + index);
     var todo = todos[index];
-    log('todo: ' + JSON.stringify(todo));
     if (todo) {
-      //todo = requestInfo.content;
-      log('todos before: ' + JSON.stringify(todos));
       todos.splice(index, 1, requestInfo.content);
-      log('todos after: ' + JSON.stringify(todos));
       returnOkay(response, null);
     } else {
       returnNotFound(response);
@@ -224,7 +179,6 @@ TodoEngine = {
     var todo = todos[index];
     if (todo) {
       for(prop in requestInfo.content.changes) {
-        log('patching property: ' + prop);
         todo[prop] = requestInfo.content.changes[prop];
       }
     } else {
@@ -233,14 +187,9 @@ TodoEngine = {
   },
 
   deleteTodo: function (requestInfo, response) {
-    log('deleteTodo()');
-    log('requestInfo: ' + JSON.stringify(requestInfo));
     var index = todos.findIndex(function (item) { return item.id === requestInfo.id });
     if (index !== -1) {
-      log('deleting index ' + index);
-      log('todos before: ' + JSON.stringify(todos));
       todos.splice(index, 1);
-      log('todos after: ' + JSON.stringify(todos));
       returnOkay(response, null);
     } else {
       returnNotFound(response);
@@ -248,18 +197,3 @@ TodoEngine = {
   }
 
 };
-
-/*
-
-logProperties(request, 'httpVersion, headers*, method, url, statuscode');
-
-var uri = url.parse(request.url);
-logProperties(uri, 'href, protocol, host, hostname, port, pathname, search, path, query, hash');
-
-var uriPath = url.parse(request.url).pathname;
-var filename = path.join(process.cwd(), uriPath);
-
-log('uriPath: ' + uriPath);
-log('filename: ' + filename);
-
-*/

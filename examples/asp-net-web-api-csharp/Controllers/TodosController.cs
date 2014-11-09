@@ -25,7 +25,7 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
 		public HttpResponseMessage Post([FromBody]Todo todo)
         {
 			int newId = TodosRepository.Add(todo);
-			var responseObject = new { newId = newId };
+			var responseObject = TodosRepository.GetById(newId);
 			var response = Request.CreateResponse(HttpStatusCode.Created, responseObject);
 			response.Headers.Location = new Uri(Url.Link("DefaultApi", responseObject));
 			return response;

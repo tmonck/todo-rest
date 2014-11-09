@@ -28,7 +28,6 @@ var buildPostPromise = function(todo) {
   return new Promise(function (resolve, reject) {
     todosServiceProxy.post(todo, function (err, responseInfo) {
       if (err) reject(err.message);
-      //console.log('    new id: ' + responseInfo.responseObject.newId);
       resolve(responseInfo.responseObject);
     });
   });
@@ -85,16 +84,19 @@ describe('TodoREST API', function () {
 
   it('should allow adding new items', function (done) {
 
-    var firstPost = buildPostPromise({ title: 'find Waldo' });
-    var secondPost = buildPostPromise({ title: 'fix mailbox' });
-    var thirdPost = buildPostPromise({ title: 'check PO box' });
+    var firstPost = buildPostPromise({ title: 'go round mums' });
+    var secondPost = buildPostPromise({ title: 'get Liz back' });
+    var thirdPost = buildPostPromise({ title: 'sort life out' });
 
     Promise.all([firstPost, secondPost, thirdPost]).then(function(values) {
-      expect(_.find(values, { newId: 0 })).to.not.exist; // sanity check
-      expect(_.find(values, { newId: 1 })).to.exist;
-      expect(_.find(values, { newId: 2 })).to.exist;
-      expect(_.find(values, { newId: 3 })).to.exist;
-      expect(_.find(values, { newId: 4 })).to.not.exist; // sanity check
+      expect(_.find(values, { id: 0 })).to.not.exist; // sanity check
+      expect(_.find(values, { id: 1 })).to.exist;
+      expect(_.find(values, { id: 2 })).to.exist;
+      expect(_.find(values, { id: 3 })).to.exist;
+      expect(_.find(values, { id: 4 })).to.not.exist; // sanity check
+      expect(_.find(values, { title: 'go round mums' })).to.exist;
+      expect(_.find(values, { title: 'get Liz back' })).to.exist;
+      expect(_.find(values, { title: 'sort life out' })).to.exist;
       done();
     }).catch(function(err) {
       done(err);
@@ -113,9 +115,9 @@ describe('TodoREST API', function () {
     }).then(function (value) {
         expect(value.length).to.equal(3); // there should be 3 todos now
         expect(_.find(value, { title: 'abc' })).to.not.exist; // sanity check
-        expect(_.find(value, { title: 'find Waldo' })).to.exist;
-        expect(_.find(value, { title: 'fix mailbox' })).to.exist;
-        expect(_.find(value, { title: 'check PO box' })).to.exist;
+        expect(_.find(value, { title: 'go round mums' })).to.exist;
+        expect(_.find(value, { title: 'get Liz back' })).to.exist;
+        expect(_.find(value, { title: 'sort life out' })).to.exist;
         done()
       }).catch(function(err) {
         done(err);
