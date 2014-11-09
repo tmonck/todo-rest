@@ -9,19 +9,16 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
 {
     public class TodosController : ApiController
     {
-        // GET api/todo
         public List<Todo> Get()
         {
 			return TodosRepository.GetAll();
         }
 
-        // GET api/todo/5
 		public Todo Get(int id)
         {
 			return TodosRepository.GetById(id);
         }
 
-        // POST api/todo
 		public HttpResponseMessage Post([FromBody]Todo todo)
         {
 			int newId = TodosRepository.Add(todo);
@@ -31,7 +28,6 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
 			return response;
         }
 
-        // PUT api/todo/5
 		public HttpResponseMessage Put(int id, [FromBody]Todo todo)
         {
 			bool wasFound = TodosRepository.Update(todo);
@@ -46,7 +42,6 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
 			}
         }
 
-        // DELETE api/todo/5
 		public HttpResponseMessage Delete(int id)
         {
 			bool wasFound = TodosRepository.Delete(id);
@@ -61,9 +56,9 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
 			}
         }
 
-		[HttpGet]
-		[Route("api/ClearTodos")]
-		public HttpResponseMessage ClearTodos()
+		// NOTE: This "delete everything" method is not recommended for a typical REST API.
+		//       It's only included here for ease of testing, so we can quickly reset back to a blank slate.
+		public HttpResponseMessage Delete()
 		{
 			TodosRepository.Clear();
 			return Request.CreateResponse(HttpStatusCode.NoContent);

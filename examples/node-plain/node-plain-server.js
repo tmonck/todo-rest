@@ -83,22 +83,20 @@ var parseRequest = function(request, callback) {
 };
 
 var returnOkay = function (response, data) {
-  try {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    if (data !== undefined) {
-      if (data instanceof String) {
-        response.write(JSON.stringify(data));
-      } else if (data instanceof Number) {
-        response.write(JSON.stringify(data));
-      } else {
-        response.write(JSON.stringify(data));
-      }
-    }
-    response.end();
-  }
-  catch (err) {
-    write('ERROR in returnOkay(): ' + err);
-  }
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  response.write(JSON.stringify(data));
+  response.end();
+};
+
+var returnCreated = function (response, data) {
+  response.writeHead(201, {'Content-Type': 'application/json'});
+  response.write(JSON.stringify(data));
+  response.end();
+};
+
+var returnNoContent = function (response) {
+  response.writeHead(204, {'Content-Type': 'text/plain'});
+  response.end();
 };
 
 var returnNotFound = function (response) {
@@ -125,6 +123,7 @@ http.createServer(function (request, response) {
         case 'PUT todos/id': TodoEngine.overwriteTodo(requestInfo, response); break;
         case 'PATCH todos/id': TodoEngine.patchTodo(requestInfo, response); break;
         case 'DELETE todos/id': TodoEngine.deleteTodo(requestInfo, response); break;
+        case 'DELETE todos': TodoEngine.deleteAllTodos(requestInfo, response); break;
         default: returnNotFound(response);
       }
     });
@@ -160,7 +159,7 @@ TodoEngine = {
     todo.id = nextTodoId;
     todos.push(todo);
     nextTodoId++;
-    returnOkay(response, todo);
+    returnCreated(response, todo);
   },
 
   overwriteTodo: function (requestInfo, response) {
@@ -168,7 +167,7 @@ TodoEngine = {
     var todo = todos[index];
     if (todo) {
       todos.splice(index, 1, requestInfo.content);
-      returnOkay(response, null);
+      returnNoContent(response, null);
     } else {
       returnNotFound(response);
     }
@@ -181,6 +180,7 @@ TodoEngine = {
       for(prop in requestInfo.content.changes) {
         todo[prop] = requestInfo.content.changes[prop];
       }
+      returnNoContent(response);
     } else {
       returnNotFound(response);
     }
@@ -190,10 +190,18 @@ TodoEngine = {
     var index = todos.findIndex(function (item) { return item.id === requestInfo.id });
     if (index !== -1) {
       todos.splice(index, 1);
-      returnOkay(response, null);
+      returnNoContent(response, null);
     } else {
       returnNotFound(response);
     }
+  },
+
+  // NOTE: This "delete everything" method is not recommended for a typical REST API.
+  //       It's only included here for ease of testing, so we can quickly reset back to a blank slate.
+  deleteAllTodos: function (requestInfo, response) {
+    todos = [];
+    nextTodoId = 1;
+    returnNoContent(response);
   }
 
 };

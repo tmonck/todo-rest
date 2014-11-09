@@ -10,8 +10,6 @@ Properties:
   host:          (string, required) API host name
   port:          (number, optional, default = 80) API port number
   basePath:      (string, optional, default = "") Base path to the API (e.g., "/api")
-  resetPath:      (string, optional, no default) API subpath to call to perform initial test setup,
-                 such as removing todos from earlier test runs.
 
 */
 var testMetadata = {
@@ -44,13 +42,11 @@ var testMetadata = {
   },
   'asp-net-web-api-csharp': {
     host: 'localhost',
-    basePath: '/TodoREST.AspNetWebApiCSharp/api',
-    resetPath: '/ClearTodos'
+    basePath: '/TodoREST.AspNetWebApiCSharp/api'
   },
   'asp-net-web-api-vb': {
     host: 'localhost',
-    basePath: '/TodoREST.AspNetWebApiCSharp/api',
-    resetPath: '/ClearTodos'
+    basePath: '/TodoREST.AspNetWebApiCSharp/api'
   }
 };
 

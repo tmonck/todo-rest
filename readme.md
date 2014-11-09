@@ -72,7 +72,7 @@ Todo instances should only consist the following two properties.
 (Note that the `id` property gets set at the server, so a new todo instance about to get POSTed to the server will only have a `title`.)
 
  - **id:** (required) An integer starting at 1 and auto-incrementing by 1
- - **title** (required) The text of the todo item
+ - **title:** (required) The text of the todo item
 
 ### Operations
 
@@ -88,5 +88,5 @@ Todo instances should only consist the following two properties.
 
  - **DELETE /todos/{id}** should remove the specified todo from the todos array on the server, and return an empty *204 No Content* response
 
- - **DELETE /todos** should remove all todos from the todos array on the server, and return an empty *204 No Content* response
+ - **DELETE /todos** should remove all todos from the todos array on the server, reset the next available id to 1, and return an empty *204 No Content* response
    (NOTE: This "delete everything" operation would not typically be recommended for a "normal" REST API, but is included here for ease of testing)

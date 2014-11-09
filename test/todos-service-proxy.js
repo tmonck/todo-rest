@@ -115,6 +115,22 @@ var TodosServiceProxy = function(options) {
     request.end();
   };
 
+  /**
+   * Deletes all todos.
+   * @param callback  Callback function taking two parameters: (1) standard error object; (2) responseInfo { data: String, responseObject: Object }
+   */
+  this.deleteAll = function (callback) {
+    var request = http.request({
+      host: options.host,
+      port: options.port,
+      path: (options.basePath || '') + '/todos',
+      method: 'DELETE'
+    }, function (response) {
+      HttpHelper.parseResponse(response, callback);
+    });
+    request.end();
+  };
+
 };
 
 module.exports = TodosServiceProxy;
