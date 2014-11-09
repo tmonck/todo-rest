@@ -28,8 +28,15 @@ Should work on Windows, Linux, and Mac OS X.
 
 ### One-time initial setup
 1. Open a console window in the *test* subdirectory
-1. Ensure that you have mocha installed globally (`sudo npm install -g mocha` on Linux; `npm install -g mocha` on Windows or Mac OS X)
+1. Install mocha globally (`sudo npm install -g mocha` on Linux; `npm install -g mocha` on Windows or Mac OS X)
 1. Install the local dependencies listed in *package.json* by executing `npm install`
+
+> If npm complains that it couldn't parse *package.json*, but its contents validate correctly at [jsonlint.com](http://jsonlint.com/),
+> try deleting *package.json* and then installing each dependency manually as follows:
+>
+>     npm install lodash-node
+>     npm install es6-promise-polyfill
+>     npm install chai
 
 ### Every time
 1. Edit the *test-name.txt* file to contain a single test/API name (e.g., `node-plain`)
