@@ -8,7 +8,7 @@ Inspired by Addy Osmani's [TodoMVC](https://github.com/tastejs/todomvc) project.
 
 ## Setup
 
-Should work on Windows, Linux, and Mac OS X.
+Confirmed to work on Windows and Linux; should presumably work on Mac OS X as well.
 
 1. Download and install [Node.js](http://nodejs.org/download/) if you have not already done so.
 1. Download the source code using either of the options below
@@ -21,7 +21,7 @@ Should work on Windows, Linux, and Mac OS X.
 
 ### Download manually
 
-1. Use the **Download ZIP** buttons to the right.
+1. Use the **Download ZIP** button to the right.
 1. Extract the ZIP file contents into the directory of your choice.
 
 ## Executing the test for one of the APIs
@@ -50,7 +50,7 @@ Should work on Windows, Linux, and Mac OS X.
    (Use the existing directory names as a guideline.)
 1. Create a new subdirectory under *examples* with that same name.
 1. Put all your API code in that directory.
-1. Make sure that your API meets the **API Requirements** below.
+1. Make sure that your API follows the **API Requirements** below.
 1. Add a new property (with the same hyphenated name as your new directory) to the `testMetadata` object in *test-metadata.js*,
    containing the configuration options for the new API.
 1. Execute the test (see the **Execution** directions above) and ensure that all tests pass.
@@ -63,12 +63,12 @@ Should work on Windows, Linux, and Mac OS X.
 ### For the sake of simplicity:
 
 The functionality below is considered out of scope for this particular exercise,
-and should be left out in order to reduce clutter.
+and should be omitted in order to reduce clutter.
 
- - Todos should be stored in memory only (no database interaction)
- - Error handling or other logging should be omitted or kept to a bare minimum
- - Data validation should be omitted or kept to a bare minimum
- - No authorization should be required
+ - Do not require authorization
+ - Do not perform data validation
+ - Do not include logging
+ - Do not persist todos to a database or other permanent storage (just store them in memory)
 
 ### For the sake of consistency:
 
@@ -77,8 +77,8 @@ Adhering to the following requirements helps ensure that
 (b) the Mocha automated test script will work for your API with minimal configuration needed.
 
  - The API resource name must be `todos` (e.g., `http://localhost:8888/todos`)
- - The API should use JSON with camelCased property names (see **Todo Properties** below)
- - The API must support the operations listed below under **Operations**
+ - The API must use JSON with camelCased property names (see **Todo Properties** below)
+ - The API must support the operations listed below under **API Operations** below
 
 ### Todo Properties
 
@@ -88,7 +88,7 @@ Todo instances should only consist the following two properties.
  - **id:** (required) An integer starting at 1 and auto-incrementing by 1
  - **title:** (required) The text of the todo item
 
-### Operations
+### API Operations
 
  - **GET /todos** should return a *200 OK* response containing an array of todo instances (e.g, `[]` when empty, or `[{"id":1,"title":"go round mums"}]` with one item)
 
