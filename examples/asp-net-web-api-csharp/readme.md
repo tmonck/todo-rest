@@ -2,7 +2,7 @@
 
 ## Setup
 
-Instructions below are for *Windows 8.1 Professional* running *IIS 8.5* and *Visual Studio 2013 Professional*.
+Instructions below are for *Windows 8.1 Pro* running *IIS 8.5* and *Visual Studio 2013 Professional*.
 Minor adjustments may be needed if you are using different versions of Windows, IIS, or Visual Studio.
 
 1. Open IIS.
