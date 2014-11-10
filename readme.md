@@ -33,6 +33,7 @@ NOTE: If this is the first time running the test on a particular workstation, fo
 1. Execute the following command line: `mocha spec.js -b -s 200 -t 5000`
 
 **One-time initial setup**
+
 1. Open a console window in the *test* subdirectory
 1. Install mocha globally (`sudo npm install -g mocha` on Linux; `npm install -g mocha` on Windows or Mac OS X)
 1. Install the local dependencies listed in *package.json* by executing `npm install`
