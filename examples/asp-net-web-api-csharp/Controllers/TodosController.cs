@@ -11,57 +11,57 @@ namespace TodoRest.AspNetWebApiCSharp.Controllers
     {
         public List<Todo> Get()
         {
-			return TodosRepository.GetAll();
+            return TodosRepository.GetAll();
         }
 
-		public Todo Get(int id)
+        public Todo Get(int id)
         {
-			return TodosRepository.GetById(id);
+            return TodosRepository.GetById(id);
         }
 
-		public HttpResponseMessage Post([FromBody]Todo todo)
+        public HttpResponseMessage Post([FromBody]Todo todo)
         {
-			int newId = TodosRepository.Add(todo);
-			var responseObject = TodosRepository.GetById(newId);
-			var response = Request.CreateResponse(HttpStatusCode.Created, responseObject);
-			response.Headers.Location = new Uri(Url.Link("DefaultApi", responseObject));
-			return response;
+            int newId = TodosRepository.Add(todo);
+            var responseObject = TodosRepository.GetById(newId);
+            var response = Request.CreateResponse(HttpStatusCode.Created, responseObject);
+            response.Headers.Location = new Uri(Url.Link("DefaultApi", responseObject));
+            return response;
         }
 
-		public HttpResponseMessage Put(int id, [FromBody]Todo todo)
+        public HttpResponseMessage Put(int id, [FromBody]Todo todo)
         {
-			bool wasFound = TodosRepository.Update(todo);
+            bool wasFound = TodosRepository.Update(todo);
 
-			if (wasFound)
-			{
-				return Request.CreateResponse(HttpStatusCode.NoContent);
-			}
-			else
-			{
-				throw new HttpResponseException(HttpStatusCode.NotFound);
-			}
+            if (wasFound)
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
         }
 
-		public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
-			bool wasFound = TodosRepository.Delete(id);
+            bool wasFound = TodosRepository.Delete(id);
 
-			if (wasFound)
-			{
-				return Request.CreateResponse(HttpStatusCode.NoContent);
-			}
-			else
-			{
-				throw new HttpResponseException(HttpStatusCode.NotFound);
-			}
+            if (wasFound)
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
         }
 
-		// NOTE: This "delete everything" method is not recommended for a typical REST API.
-		//       It's only included here for ease of testing, so we can quickly reset back to a blank slate.
-		public HttpResponseMessage Delete()
-		{
-			TodosRepository.Clear();
-			return Request.CreateResponse(HttpStatusCode.NoContent);
-		}
+        // NOTE: This "delete everything" method is not recommended for a typical REST API.
+        //       It's only included here for ease of testing, so we can quickly reset back to a blank slate.
+        public HttpResponseMessage Delete()
+        {
+            TodosRepository.Clear();
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
     }
 }
