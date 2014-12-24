@@ -106,6 +106,6 @@ Example REST APIs will also implement the following behaviors for error conditio
 
   > New resource instances should not have an `id` property set. If you are trying to update an existing resource instance, use the PUT method instead.
 
-- For PUT operations, if the `id` in the querystring does not match the `id` in the request body, the API will return a response with a status code of 400 (Bad Request), and the following plain text in the response body:
+- For PUT operations, if the `id` in the URL does not match the `id` in the request body, the API will return a response with a status code of 400 (Bad Request), and the following plain text in the response body:
 
-  > The id in the querystring did not match the id in the request body.
+  > The id in the URL did not match the id in the request body.
