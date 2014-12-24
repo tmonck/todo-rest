@@ -100,7 +100,7 @@ Todo instances should only consist the following two properties.
 
 Example REST APIs will also implement the following behaviors for error conditions.
 
-- For any of the above operations that involve `id`, if the id in the querystring does not match the id of any todo on the server, the API will return a response with a status code of 404 (Not Found), and an empty response body
+- For any of the above operations that involve an `id`, if the id in the URL does not match the id of any todo on the server, the API will return a response with a status code of 404 (Not Found), and an empty response body
 
 - For POST operations, if the todo passed in from the client contains an `id` property with any value other than `undefined` or `null`, the API will return a response with a status code of 400 (Bad Request), and the following plain text in the response body:
 
